@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def home
-    puts 'He..'
+    # puts 'He..'
   end
 
   def about
