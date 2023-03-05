@@ -28,7 +28,7 @@ class ArticlesController < ApplicationController
       flash[:notice] = 'Article was saved successfully'
       redirect_to @article
     else
-      flash[:notice] = 'Error saving the article, Try again'
+      # flash[:notice] = 'Error saving the article, Try again'
       render 'new'
     end
     # way 1
@@ -41,7 +41,7 @@ class ArticlesController < ApplicationController
       flash[:notice] = "Article Updated Successfully"
       redirect_to @article
     else
-      flash[:notice] = "Error Updating Article"
+      # flash[:notice] = "Error Updating Article"
       render 'edit'
     end
   end
