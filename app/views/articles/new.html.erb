@@ -1,6 +1,9 @@
-<h1>New Article</h1>
-<h3>Create new article</h3>
+<div class="container py-5" id="new_article">
+  <h1 class="text-center">Create Article</h1>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Article List', articles_path %>
+  <div class="text-center mt-3">
+    <%= link_to 'Back', class: "text-decoration-none" %>
+  </div>
+</div>

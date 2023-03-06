@@ -1,9 +1,26 @@
-<h1>Articles Data</h1>
-<% params[:id]%>
-<% @id_param%>
-<p><strong>Title: </strong><%= @article.title %></p>
-<p><strong>Description: </strong><%= @article.description %></p>
+<div class="container py-5">
+  <h1 class="text-center mb-5">Article Details</h1>
+  <%# params[:id] %>
+  <%# @id_param %>
+  <div class="m-auto w-50 p-3">
+    <small class="d-flex justify-content-between mb-lg-4">
+      <i>id: <%= @article.id %></i>
+      <i>Created <%= time_ago_in_words(@article.created_at) %> ago, edited <%= time_ago_in_words(@article.updated_at) %> ago</i>
+    </small>
+    <hr>
+    <div class="">
+      <h5 class="text-capitalize fw-bold fs-4 mb-3"><%= @article.title %></h5>
+      <p class=""><%= @article.description %></p>
+      <div class="mt-4">
+        <%= link_to 'Edit', edit_article_path, class: "btn btn-outline-primary" %>
+        <%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
+      </div>
+    </div>
+  </div>
+<!--  <p><strong>Title: </strong><%#= @article.title %></p>-->
+<!--  <p><strong>Description: </strong><%#= @article.description %></p>-->
 
-<%= link_to 'Articles List', articles_path %> |
-<%= link_to 'Edit Article', edit_article_path %> |
-<%= link_to 'Delete Article', article_path(@article), method: :delete, data: {confirm: "Are you sure?"} %>
+<!--  <%#= link_to 'Articles List', articles_path %> |-->
+<!--  <%#= link_to 'Edit Article', edit_article_path %> |-->
+  <%#= link_to 'Delete Article', article_path(@article), method: :delete, data: {confirm: "Are you sure?"} %>
+</div>

@@ -1,6 +1,10 @@
-<h1>New Article</h1>
-<h3>Create new article</h3>
+<div class="container py-5">
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 class="text-center">Edit Article</h1>
+    <%= link_to 'Cancel', articles_path, class: "btn btn-outline-danger" %>
+  </div>
+  <br>
+  <%= render 'form' %>
 
-<%= render 'form' %>
 
-<%= link_to 'Cancel edit and return to Articles list', articles_path %>
+</div>

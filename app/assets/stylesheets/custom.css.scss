@@ -4,6 +4,7 @@
 html,body {
   height: 100%;
   font-family: 'Poppins', sans-serif !important;
+  box-sizing: border-box;
 }
 
 .navbar {
@@ -56,4 +57,9 @@ html,body {
   margin: auto;
   display: flex;
   justify-content: space-between;
+}
+
+#new_article {
+  padding: 2rem;
+
 }
