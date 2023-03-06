@@ -1,9 +1,13 @@
 <div class="container py-5" id="new_article">
-  <h1 class="text-center">Create Article</h1>
-
+<!--  <h1 class="text-center">Create Article</h1>-->
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 class="text-center">Create Article</h1>
+    <%= link_to 'Cancel', articles_path, class: "btn btn-outline-danger" %>
+  </div>
+  <br>
   <%= render 'form' %>
 
   <div class="text-center mt-3">
-    <%= link_to 'Back', class: "text-decoration-none" %>
+    <%#= link_to 'Back', articles_path, class: "text-decoration-none" %>
   </div>
 </div>
