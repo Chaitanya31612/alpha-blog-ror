@@ -1,0 +1,7 @@
+<h1 class="text-center my-5 fw-bolder"><%= @user.username %>'s Profile</h1>
+
+<%= gravatar_for @user, size: 200 %>
+
+<h3 class="mt-5 text-center text-decoration-underline">Articles</h3>
+
+<%= render 'articles/articlelist' %>

@@ -1,8 +1,21 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def new
     @user = User.new
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @user.update(user_params)
+      flash[:notice] = 'Your account has been updated successfully!'
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
 
   def create
@@ -10,14 +23,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "Welcome to Alpha Blog #{@user.username}!"
-      redirect_to articles_path
+      redirect_to @user
     else
       render 'new'
     end
   end
 
   def show
-
+    @articles = @user.articles
   end
 
   private

@@ -1,0 +1,38 @@
+<div class="container">
+
+  <div id="articles">
+    <div id="content-header text-center row justify-content-md-center mb-4">
+      <% if !@user %>
+        <div class="col-8" id="create-link">
+          <i>Total Articles: <%= @articles.length %></i>
+          <%= link_to 'Create Article', new_article_path, class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <% @articles.reverse_each do |article| %>
+      <div class="row justify-content-sm-center">
+        <div class="col-8">
+          <div class="card border-light text-center mb-5 shadow bg-white rounded" id='article-card'>
+            <div class="card-header">
+              <!--                <i>id: <%#= article.id %></i>-->
+              <i class="text-muted">by <%= article.user.username if article.user %></i>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to article.title, article_path(article), class: 'text-decoration-none' %></h5>
+              <p class="card-text"><%= truncate(article.description, length: 100) %></p>
+              <!--          <a href="#" class="btn btn-primary">Go somewhere</a>-->
+              <%= link_to 'View', article_path(article), class: 'btn btn-outline-success' %>
+              <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-outline-primary' %>
+              <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-outline-danger' %>
+            </div>
+            <div class="card-footer text-muted">
+              <small><i>Created <%= time_ago_in_words(article.created_at) %> ago, edited <%= time_ago_in_words(article.updated_at) %> ago</i></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>
