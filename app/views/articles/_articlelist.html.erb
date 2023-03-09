@@ -2,12 +2,14 @@
 
   <div id="articles">
     <div id="content-header text-center row justify-content-md-center mb-4">
-      <% if !@user %>
-        <div class="col-md-8" id="create-link">
-          <i>Total Articles: <%= @total_articles %></i>
+      <div class="col-md-8" id="create-link">
+        <i>Total Articles: <%= @total_articles %></i>
+        <% if logged_in? && current_user == @user %>
           <%= link_to 'Create Article', new_article_path, class: 'btn btn-primary' %>
-        </div>
-      <% end %>
+        <% else %>
+          <i>Per page: <%= @articles.length %></i>
+        <% end %>
+      </div>
     </div>
     <br>
     <% if @articles.length > 0 %>

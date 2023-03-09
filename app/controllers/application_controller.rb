@@ -9,4 +9,11 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !!current_user
   end
+
+  def require_user
+    unless logged_in?
+      flash[:alert_fail] = 'You are not allowed to perform this action!'
+      redirect_to login_path
+    end
+  end
 end

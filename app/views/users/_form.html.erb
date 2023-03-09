@@ -11,10 +11,15 @@
     </div>
     <div class="form-group row mb-2">
       <%= f.label :password, class: "col-form-label fw-semibold text-muted ps-0" %> <br>
-      <%= f.password_field :password, rows: 10, class: "form-control", placeholder: "Choose your password" %>
+      <%= f.password_field :password, rows: 10, class: "form-control", placeholder: "#{@user.new_record? ? 'Choose your password' : 'Update your password'}" %>
     </div>
     <div class="form-group row">
       <%= f.submit(@user.new_record? ? 'Sign Up' : 'Update account', class: "btn btn-primary mt-4") %>
     </div>
+    <% unless @user.new_record? %>
+      <div class="form-group row">
+        <%= link_to 'Delete account', user_path(@user), method: :delete, class: 'btn btn-outline-danger mt-4', data: {confirm: 'Are you sure?'} %>
+      </div>
+    <% end %>
   </div>
 <% end %>
