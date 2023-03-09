@@ -1,19 +1,17 @@
 <%= render 'shared/errors', obj: @user %>
-<% changeClick = false %>
 <%= form_with(model: @user, local: true) do |f| %>
   <div class="px-3">
     <div class="form-group row mb-2">
-      <%= f.label :username, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>
+      <%= f.label :username, class: "col-form-label fw-semibold text-muted ps-0" %> <br>
       <%= f.text_field :username, class: "form-control", placeholder: "username_123" %>
     </div>
     <div class="form-group row mb-2">
-      <%= f.label :email, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>
+      <%= f.label :email, class: "col-form-label fw-semibold text-muted ps-0" %> <br>
       <%= f.text_field :email, rows: 10, class: "form-control", placeholder: "email@example.com" %>
     </div>
-    <%# if @user.new_record? %>
     <div class="form-group row mb-2">
-      <%= f.label :password, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>
-      <%= f.password_field :password, rows: 10, class: "form-control", placeholder: "*******" %>
+      <%= f.label :password, class: "col-form-label fw-semibold text-muted ps-0" %> <br>
+      <%= f.password_field :password, rows: 10, class: "form-control", placeholder: "Choose your password" %>
     </div>
     <div class="form-group row">
       <%= f.submit(@user.new_record? ? 'Sign Up' : 'Update account', class: "btn btn-primary mt-4") %>

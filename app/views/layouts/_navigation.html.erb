@@ -2,11 +2,14 @@
   <div class="container-fluid">
 <!--    <a class="navbar-brand" id="logo" href="/">Alpha Blog</a>-->
     <%= link_to 'Alpha Blog', root_path, class: 'navbar-brand', id: 'logo' %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to 'Users', users_path, class: 'nav-link' %>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Articles
@@ -15,11 +18,46 @@
             <li>
               <%= link_to 'Articles List', articles_path, class: 'dropdown-item' %>
             </li>
-            <li>
-              <%= link_to 'New Article', new_article_path, class: 'dropdown-item' %>
-            </li>
+            <% if logged_in? %>
+              <li>
+                <%= link_to 'Create Article', new_article_path, class: 'dropdown-item' %>
+              </li>
+            <% end %>
           </ul>
         </li>
+        <% if logged_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= current_user.username %>'s Profile
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to 'View Profile', user_path(current_user), class: 'dropdown-item' %>
+              </li>
+              <% if logged_in? %>
+                <li>
+                  <%= link_to 'Edit Profile', edit_user_path(current_user), class: 'dropdown-item' %>
+                </li>
+              <% end %>
+              <li>
+                <%= link_to 'Logout', logout_path, class: 'dropdown-item', method: :delete %>
+              </li>
+            </ul>
+          </li>
+<!--          <li class="nav-item">-->
+            <%#= link_to current_user.username, user_path(current_user), class: 'nav-link' %>
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+            <%#= link_to 'Logout', logout_path, class: 'nav-link', method: :delete %>
+<!--          </li>-->
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Login', login_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', signup_path, class: 'nav-link' %>
+          </li>
+        <% end %>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

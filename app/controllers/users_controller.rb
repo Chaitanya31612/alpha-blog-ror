@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
+  def index
+    @users = User.paginate(page: params[:page], per_page: 5)
+  end
+
+  def show
+    @articles = @user.articles.paginate(page: params[:page], per_page: 5)
+  end
+
   def new
     @user = User.new
   end
@@ -22,15 +30,12 @@ class UsersController < ApplicationController
     # byebug
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id
       flash[:notice] = "Welcome to Alpha Blog #{@user.username}!"
       redirect_to @user
     else
       render 'new'
     end
-  end
-
-  def show
-    @articles = @user.articles
   end
 
   private

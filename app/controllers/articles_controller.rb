@@ -2,7 +2,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 5)
+    @total_articles = Article.count
   end
 
   def show
@@ -23,6 +24,7 @@ class ArticlesController < ApplicationController
 
     # this is strong param passing
     @article = Article.new(article_params)
+    @article.user = current_user
     # render plain: @article
     if @article.save
       flash[:notice] = 'Article was saved successfully'

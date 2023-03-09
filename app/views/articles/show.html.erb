@@ -1,27 +1,24 @@
 <div class="container py-5">
   <h1 class="text-center mb-5">Article Details</h1>
-  <%# params[:id] %>
-  <%# @id_param %>
-  <div class="m-auto w-50 p-3">
+  <div class="m-md-auto p-3 border p-4 py-5" id="article_display">
     <small class="d-flex justify-content-between mb-lg-4">
-<!--      <i>id: <%#= @article.id %></i>-->
-      <i class="text-muted">by <%= @article.user.username if @article.user %></i>
+      <% if @article.user %>
+        <%= link_to user_path(@article.user), class: 'text-decoration-none' do %>
+          <i class="text-muted d-flex align-items-center"><%= gravatar_for(@article.user, size: 20) %> &nbsp; <%= @article.user.username %></i>
+        <% end %>
+      <% end %>
       <i class="text-muted">Updated <%= time_ago_in_words(@article.updated_at) %> ago</i>
     </small>
     <hr>
-    <div class="">
+    <div>
       <h5 class="text-capitalize fw-bold fs-4 mb-3"><%= @article.title %></h5>
       <p class=""><%= @article.description %></p>
-      <div class="mt-4">
-        <%= link_to 'Edit', edit_article_path, class: "btn btn-outline-primary" %>
-        <%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
-      </div>
+      <% if logged_in? && @article.user == current_user %>
+        <div class="mt-4">
+          <%= link_to 'Edit', edit_article_path, class: "btn btn-outline-primary" %>
+          <%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
+        </div>
+      <% end %>
     </div>
   </div>
-<!--  <p><strong>Title: </strong><%#= @article.title %></p>-->
-<!--  <p><strong>Description: </strong><%#= @article.description %></p>-->
-
-<!--  <%#= link_to 'Articles List', articles_path %> |-->
-<!--  <%#= link_to 'Edit Article', edit_article_path %> |-->
-  <%#= link_to 'Delete Article', article_path(@article), method: :delete, data: {confirm: "Are you sure?"} %>
 </div>
