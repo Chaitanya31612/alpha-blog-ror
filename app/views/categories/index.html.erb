@@ -1,0 +1,6 @@
+<h1 class="text-center my-5 fw-bolder">Categories</h1>
+<%= render 'categorylist' %>
+
+<div class="flickr_pagination mb-5">
+  <%= will_paginate @categories, :container => false %>
+</div>

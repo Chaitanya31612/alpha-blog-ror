@@ -61,11 +61,12 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :description)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 
   def require_same_user
-    unless @article.user == current_user
+    # if @article.user != current_user && !current_user.admin?
+    unless current_user.admin? || @article.user == current_user
       flash[:alert_fail] = 'You are not allowed to perform this action!'
       redirect_to @article
     end
