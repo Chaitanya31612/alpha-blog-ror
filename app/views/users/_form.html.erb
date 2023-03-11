@@ -16,10 +16,14 @@
     <div class="form-group row">
       <%= f.submit(@user.new_record? ? 'Sign Up' : 'Update account', class: "btn btn-primary mt-4") %>
     </div>
-    <% unless @user.new_record? %>
-      <div class="form-group row">
-        <%= link_to 'Delete account', user_path(@user), method: :delete, class: 'btn btn-outline-danger mt-4', data: {confirm: 'Are you sure?'} %>
-      </div>
-    <% end %>
+    <% if @user.new_record? %>
+    <div class="form-group row mt-3">
+        <small class="text-muted ps-0">Already have an account? <%=  link_to 'Login', login_path  %></small>
+    </div>
+    <%  else  %>
+    <div class="form-group row">
+      <%=  link_to 'Delete account', user_path(@user), method: :delete, class: 'btn btn-outline-danger mt-4', data: {confirm: 'Are you sure you want to delete the user account and all associated articles?'}  %>
+    </div>
+    <%  end %>
   </div>
 <% end %>

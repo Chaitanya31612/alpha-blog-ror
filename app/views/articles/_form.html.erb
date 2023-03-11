@@ -15,11 +15,20 @@
   <!--    <small id="emailHelp" class="form-text text-muted">Minimum 10 characters</small>-->
     </div>
 
-    <div class="form-group row">
-      <%= f.label :category, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>
-      <%= f.collection_select(:category_ids, Category.all, :id, :name, {prompt: "Please Select a Category(Optional)"}, {multiple: true, size: 3, class: "select"}) %>
-    </div>
+<!--    <div class="form-group row">-->
+<!--      <%#= f.label :category, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>-->
+      <%#= f.collection_select(:category_ids, Category.all, :id, :name, {prompt: "Please Select a Category(Optional)"}, {multiple: true, size: 3, class: "select"}) %>
+<!--    </div>-->
 
+    <div class="form-group mb-3">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 ps-0">
+          <%= f.label :category, class: "col-2 col-form-label fw-semibold text-muted ps-0" %> <br>
+          <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+            <% cb.label(class: "checkbox-inline input_checkbox me-4") {cb.check_box(class: "checkbox me-1") + cb.text } %>
+          <% end %>
+        </div>
+      </div>
     <div class="form-group row">
       <%= f.submit class: "btn btn-primary mt-4" %>
     </div>
