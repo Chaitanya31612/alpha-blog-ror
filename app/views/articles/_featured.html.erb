@@ -1,0 +1,49 @@
+<% if @featured.length > 0 %>
+  <div class="container">
+    <h3 class="text-center my-3">Featured</h3>
+    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @featured.each do |article| %>
+          <div class="carousel-item <%= "active" if @featured.first.id == article.id %>">
+            <div class="row justify-content-md-center">
+              <div class="col-md-8">
+                <div class="card border-5 text-center mb-5 bg-white rounded" id='article-card'>
+<!--                    <div class="card-header" style="color: orange">-->
+<!--                      Featured-->
+<!--                    </div>-->
+                  <div class="card-body">
+                    <% if article.categories.length > 0 %>
+                      <small class="mb-4 text-center d-block" id="tags">
+                        <b>Tags: &nbsp;</b> <%= render article.categories %>
+                      </small>
+                    <% end %>
+                    <h5 class="card-title d-flex align-items-center justify-content-center">
+                      <%= link_to article.title, article_path(article), class: 'text-decoration-none me-2' %>
+                      <span class="fa fa-star" style="color: orange"></span>
+                    </h5>
+                    <p class="card-text"><%= truncate(article.description, length: 100) %></p>
+                    <%= link_to 'View', article_path(article), class: 'btn btn-outline-success' %>
+                  </div>
+                  <% if !@user && article.user %>
+                    <div class="card-footer text-muted">
+                      <i class="text-muted">by <%= link_to article.user.username, user_path(article.user) %></i>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <hr>
+  </div>
+<% end %>

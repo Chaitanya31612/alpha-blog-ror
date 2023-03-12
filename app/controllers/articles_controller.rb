@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.paginate(page: params[:page], per_page: 5)
     @total_articles = Article.count
+    @featured = Article.where(featured: true)
   end
 
   def show
@@ -61,7 +62,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :description, category_ids: [])
+    params.require(:article).permit(:title, :description, :featured, category_ids: [])
   end
 
   def require_same_user
