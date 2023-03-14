@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Features
+* Featured
+* Search function
+* Forget password
+* user image upload
+* password strength
