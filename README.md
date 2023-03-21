@@ -29,3 +29,10 @@ Things you may want to cover:
 * Forget password
 * user image upload
 * password strength
+
+
+## Test cases
+
+### Models
+1. User
+* validation for username, email and password

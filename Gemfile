@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   gem 'rubocop'
   gem 'sqlite3', '~> 1.4'
+  gem 'rspec-rails', '~> 6.0.0'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
