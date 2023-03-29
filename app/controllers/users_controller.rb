@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_user, only: [:index, :edit, :update, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :set_follow_user, only: [:follow, :unfollow]
 
   def index
     @users = User.paginate(page: params[:page], per_page: 5)
@@ -48,11 +49,33 @@ class UsersController < ApplicationController
     redirect_to articles_path
   end
 
+  def follow
+    if @follow_user
+      current_user.follow(@follow_user)
+      redirect_back fallback_location: users_path
+    else
+      redirect_back fallback_location: users_path
+    end
+  end
+
+  def unfollow
+    if @follow_user
+      current_user.unfollow(@follow_user)
+      redirect_back fallback_location: users_path
+    else
+      redirect_back fallback_location: users_path
+    end
+  end
+
 
   private
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def set_follow_user
+    @follow_user = User.find(params[:user_id])
   end
 
   def user_params

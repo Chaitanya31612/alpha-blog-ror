@@ -22,6 +22,13 @@
                   <small><i>Joined <%= time_ago_in_words(user.created_at) %> ago</i></small>
                 </div>
                 <%= link_to 'View', user, class: 'btn btn-outline-success' %>
+                <% unless user == current_user %>
+                  <% if current_user.following?(user) %>
+                    <%= link_to 'Following', "unfollow/#{user.id}" , class: 'btn btn-outline-info', method: :post %>
+                  <% else %>
+                    <%= link_to 'Follow', "follow/#{user.id}" , class: 'btn btn-info', method: :post %>
+                  <% end %>
+                <% end %>
                 <% if logged_in? %>
                   <% if user == current_user %>
                     <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-primary' %>

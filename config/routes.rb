@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :categories
+
+  post 'follow/:user_id', to: 'users#follow'
+  post 'unfollow/:user_id', to: 'users#unfollow'
 end
