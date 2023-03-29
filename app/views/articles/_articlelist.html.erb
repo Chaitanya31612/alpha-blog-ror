@@ -35,9 +35,9 @@
                 <% end %>
                 <h5 class="card-title d-flex align-items-center justify-content-center">
                   <%= link_to article.title, article_path(article), class: 'text-decoration-none me-2' %>
-                  <% if article.featured? %>
-                    <span class="fa fa-star" style="color: orange"></span>
-                  <% end %>
+                  <%# if article.featured? %>
+<!--                    <span class="fa fa-star" style="color: orange"></span>-->
+                  <%# end %>
                 </h5>
                 <p class="card-text"><%= truncate(article.description, length: 100) %></p>
                 <!--          <a href="#" class="btn btn-primary">Go somewhere</a>-->
