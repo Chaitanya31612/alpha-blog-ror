@@ -11,6 +11,7 @@ ActiveAdmin.register Article do
     #   user.category_ids.map { |id| span link_to id, category_path(id)}.join(", ").html_safe
     # end
     column :category_ids
+    column :user
     column :user_id
     column :created_at
     column :updated_at
