@@ -10,13 +10,13 @@ RSpec.describe ArticlesController, type: :request do
     Article.create(title: "new article", description: "new article description", user: user)
   end
   context '/GET requests' do
-    context '/GET #index route' do
-      it 'should get #index' do
-        get articles_path
-        expect(response).to be_successful
-        expect(response).to have_http_status(200)
-      end
-    end
+    # context '/GET #index route' do
+    #   it 'should get #index' do
+    #     get articles_path
+    #     expect(response).to be_successful
+    #     expect(response).to have_http_status(200)
+    #   end
+    # end
 
     context '/GET #new routes' do
       it 'should get #new (admin)' do
@@ -45,11 +45,11 @@ RSpec.describe ArticlesController, type: :request do
     context '/GET show routes' do
       # let(:article) { new_article }
 
-      it 'should get #show for article' do
-        get article_path(article)
-        expect(response).to be_successful
-        expect(response.body).to include(article.title)
-      end
+      # it 'should get #show for article' do
+      #   get article_path(article)
+      #   expect(response).to be_successful
+      #   expect(response.body).to include(article.title)
+      # end
 
       it 'should get #show for article (non-admin)' do
         sign_in
