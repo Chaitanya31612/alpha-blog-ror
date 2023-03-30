@@ -1,0 +1,87 @@
+<div class="sticky-top">
+  <div class="card border-0 text-center mb-5 bg-white rounded py-3 w-75 m-auto m-sm-0">
+    <div class="card-body user-profile">
+      <h5 class="card-title"><%= gravatar_for(@user, size: 150, style: "rounded-circle border mb-2") %></h5>
+      <div>
+        <div class="d-flex justify-content-center align-items-center gap-1">
+          <%= link_to @user.username, @user, class: "fs-5 fw-bold text-decoration-none", style:"color:#242424" %>
+          <%# if @user.admin? %>
+<!--              <span class="badge rounded-pill bg-primary ms-1">Admin</span>-->
+          <%# end %>
+          <% if @user != current_user %>
+            <% if current_user.following?(@user) %>
+              <%= link_to("/unfollow/#{@user.id}", method: :post, class: "text-decoration-none") do %>
+                <span class="d-block badge bg-success ms-1">Following</span>
+              <% end %>
+            <% else %>
+              <%= link_to("/follow/#{@user.id}", method: :post, class: "text-decoration-none") do %>
+                <span class="d-block badge bg-primary ms-1">Follow</span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="text-muted mb-3">
+          <small><i>Joined <%= time_ago_in_words(@user.created_at) %> ago</i></small>
+        </div>
+        <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+          <div class="card-text py-1 d-flex flex-column">
+            <span class="text-muted fw-bolder fs-6"><%= @user.followers.count %></span>
+            <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Follower<%= "s" if @user.articles.count != 1 %></span>
+          </div>
+          <div class="card-text py-1 d-flex flex-column">
+            <span class="text-muted fw-bolder fs-6"><%= @user.articles.count %></span>
+            <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Article<%= "s" if @user.articles.count != 1 %></span>
+          </div>
+          <div class="card-text py-1 d-flex flex-column">
+            <span class="text-muted fw-bolder fs-6"><%= @user.followings.count %></span>
+            <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Following</span>
+          </div>
+        </div>
+
+        <br>
+        <% if @user == current_user or current_user.admin? %>
+        <%= link_to 'Edit Profile', edit_user_path(@user), class: 'btn btn-outline-dark' %>
+        <%#= link_to 'Delete', user_path(@user), method: :delete, data: {confirm: "Are you sure you want to delete the user account and all associated articles?"}, class: 'btn btn-outline-danger' %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+    <% if @user.followings.count > 0 %>
+      <div class="p-5 pt-3">
+        <p class="text-black fw-bold">
+          Following
+          <small><%= link_to "See all(#{@user.followings.count})", user_path({tab: "following"}), class: "text-success text-decoration-none badge" %></small>
+        </p>
+        <% @user.followings[0..4].each do |followed_user| %>
+          <%= link_to(user_path(followed_user), class:"user-entry border-bottom text-decoration-none") do %>
+            <%= gravatar_for(followed_user, size: 20, style: "rounded-circle border") %>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-normal" style="font-size: 14px;"><%= followed_user.username %></span>
+  <!--            <small><%#= followed_user.email %></small><br>-->
+            </div>
+          <% end %>
+        <% end %>
+
+      </div>
+    <% end %>
+
+  <% if @user.followers.count > 0 %>
+    <div class="p-5 pt-0">
+      <p class="text-black fw-bold">
+        Followers
+        <small><%= link_to "See all(#{@user.followers.count})", user_path({tab: "followers"}), class: "text-success text-decoration-none badge" %></small>
+      </p>
+      <% @user.followers[0..4].each do |followed_user| %>
+        <%= link_to(user_path(followed_user), class:"user-entry border-bottom text-decoration-none") do %>
+          <%= gravatar_for(followed_user, size: 20, style: "rounded-circle border") %>
+          <div class="flex-column flex-grow-1 justify-content-center gap-3">
+            <span class="fw-normal" style="font-size: 14px;"><%= followed_user.username %></span>
+          </div>
+        <% end %>
+      <% end %>
+
+    </div>
+  <% end %>
+
+</div>

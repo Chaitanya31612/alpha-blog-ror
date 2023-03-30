@@ -33,36 +33,30 @@
           <li class="nav-item  <%= "fw-bold" if request.fullpath == "/users" or request.fullpath.include?("/users?") %>">
             <%= link_to 'Users', users_path, class: "nav-link" %>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle <%= "fw-bold" if request.fullpath == "/articles" or request.fullpath.include?("/articles?") %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Articles
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <%= link_to 'Articles List', articles_path, class: 'dropdown-item' %>
-              </li>
-              <% if logged_in? %>
-                <li>
-                  <%= link_to 'Create Article', new_article_path, class: 'dropdown-item' %>
-                </li>
-              <% end %>
-            </ul>
+          <li class="nav-item  <%= "fw-bold" if request.fullpath == "/articles" or request.fullpath.include?("/articles?") %>">
+            <%= link_to 'Articles', articles_path, class: "nav-link" %>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle <%= "fw-bold" if request.fullpath == "/categories" or request.fullpath.include?("/categories?") %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Categories
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <%= link_to 'Categories List', categories_path, class: 'dropdown-item' %>
-              </li>
-              <% if logged_in? and current_user.admin? %>
+          <% if current_user.admin? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle <%= "fw-bold" if request.fullpath == "/categories" or request.fullpath.include?("/categories?") %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu">
                 <li>
-                  <%= link_to 'Create category', new_category_path, class: 'dropdown-item' %>
+                  <%= link_to 'Categories List', categories_path, class: 'dropdown-item' %>
                 </li>
-              <% end %>
-            </ul>
-          </li>
+                <% if logged_in? and current_user.admin? %>
+                  <li>
+                    <%= link_to 'Create category', new_category_path, class: 'dropdown-item' %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% else %>
+            <li class="nav-item  <%= "fw-bold" if request.fullpath == "/categories" or request.fullpath.include?("/categories?") %>">
+              <%= link_to 'Categories', categories_path, class: "nav-link" %>
+            </li>
+          <% end %>
         <% end %>
         <% if logged_in? %>
           <li class="nav-item dropdown">

@@ -1,15 +1,56 @@
 <h1 class="text-center my-5 fw-bolder"><%= @user.username %>'s Profile</h1>
 
-<%= gravatar_for @user, size: 200 %>
-<% if logged_in? && (@user == current_user || current_user.admin?) %>
-  <div class="text-center mt-4">
-    <%= link_to 'Edit your profile', edit_user_path(@user), class: 'btn btn-outline-info' %>
+<div class="section-profile">
+  <div style="flex-grow: 3; order: -1">
+    <div class="search-page__tabs mt-3">
+      <%= link_to(user_path({tab: "articles"}), class: "#{"fw-bold" if (params[:tab].blank? or params[:tab]=="articles")}") do %>
+        Articles
+        <small class="text-muted fw-light rounded-circle">(<%= @user.articles.count %>)</small>
+      <% end %>
+      <%= link_to(user_path({tab: "following"}), class: "#{"fw-bold" if (params[:tab]=="following")}") do %>
+        Following
+        <small class="text-muted fw-light rounded-circle">(<%= @user.followings.count %>)</small>
+      <% end %>
+      <%= link_to(user_path({tab: "followers"}), class: "#{"fw-bold" if (params[:tab]=="followers")}") do %>
+        Followers
+        <small class="text-muted fw-light rounded-circle">(<%= @user.followers.count %>)</small>
+      <% end %>
+    </div>
+
+    <% if params[:tab].blank? or params[:tab].eql?("articles") %>
+      <h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>
+      <%= render 'articles/articlelist' %>
+
+    <% elsif params[:tab].eql?("following") %>
+      <% @user.followings.each do |followed_user| %>
+        <%= link_to(user_path(followed_user), class:"search-page__entry border-bottom text-decoration-none") do %>
+          <%= gravatar_for(followed_user, size: 40, style: "rounded-circle border") %>
+          <div class="flex-column flex-grow-1 justify-content-center gap-3">
+            <span class="fw-bold"><%= followed_user.username %></span><br>
+            <small><%= followed_user.email %></small><br>
+            <small>User</small>
+          </div>
+        <% end %>
+      <% end %>
+    <% elsif params[:tab].eql?("followers") %>
+      <% @user.followers.each do |follower| %>
+        <%= link_to(user_path(follower), class:"search-page__entry border-bottom text-decoration-none") do %>
+          <%= gravatar_for(follower, size: 40, style: "rounded-circle border") %>
+          <div class="flex-column flex-grow-1 justify-content-center gap-3">
+            <span class="fw-bold"><%= follower.username %></span><br>
+            <small><%= follower.email %></small><br>
+            <small>User</small>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
-<% end %>
 
-<h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>
+  <div style="flex-grow: 1; justify-items: end">
+    <%= render 'userprofile' %>
+  </div>
 
-<%= render 'articles/articlelist' %>
+</div>
 
 <div class="flickr_pagination mb-5">
   <%= will_paginate @articles, :container => false %>

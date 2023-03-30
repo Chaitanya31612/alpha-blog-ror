@@ -17,11 +17,11 @@
                       <%# end %>
                       <% if user != current_user %>
                         <% if current_user.following?(user) %>
-                            <%= link_to("unfollow/#{user.id}", method: :post, class: "text-decoration-none") do %>
+                            <%= link_to("/unfollow/#{user.id}", method: :post, class: "text-decoration-none") do %>
                               <span class="d-block badge bg-success ms-1">Following</span>
                             <% end %>
                         <% else %>
-                          <%= link_to("follow/#{user.id}", method: :post, class: "text-decoration-none") do %>
+                          <%= link_to("/follow/#{user.id}", method: :post, class: "text-decoration-none") do %>
                             <span class="d-block badge bg-primary ms-1">Follow</span>
                           <% end %>
                         <% end %>

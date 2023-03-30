@@ -17,3 +17,37 @@
     }
   }
 }
+
+.section-profile {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+
+  &::before {
+    content: "" !important;
+    border: 1px solid rgba(233, 233, 233, 0.9) !important;
+    align-self: stretch !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .section-profile {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+}
+
+.user-entry {
+  width: 100px;
+  //margin: auto;
+  padding: 10px 0;
+  color: #242424;
+  //border-bottom: 1px solid #ccc;
+
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+}
