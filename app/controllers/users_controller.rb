@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :set_follow_user, only: [:follow, :unfollow]
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 5)
+    @users = User.paginate(page: params[:page], per_page: 6)
   end
 
   def show

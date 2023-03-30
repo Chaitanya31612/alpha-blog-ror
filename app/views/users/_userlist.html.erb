@@ -1,48 +1,67 @@
 <div class="container">
 
   <div id="users">
-    <% @users.each do |user| %>
-      <div class="row justify-content-md-center">
-        <div class="col-md-6">
-          <div class="card border-5 text-center mb-5 bg-white rounded" id='article-card'>
-            <div class="card-body d-flex justify-content-evenly align-items-center">
-              <h5 class="card-title"><%= link_to gravatar_for(user, size: 150, style: "rounded-circle border"), user, class: 'text-decoration-none' %></h5>
-              <div>
-                <div>
-                  <%= link_to user.username, user, class: "fs-5 fw-bold text-decoration-none text-dark" %>
-                  <% if user.admin? %>
-                    <span class="badge rounded-pill bg-primary ms-1">Admin</span>
-                  <% end %>
+    <div class="row justify-content-md-center">
+      <div class="col-md-10">
+        <div class="row">
+          <% @users.each do |user| %>
+            <div class="col-md-4">
+              <div class="card border-5 text-center mb-5 bg-white rounded py-3" id='article-card'>
+                <div class="card-body user-profile">
+                  <h5 class="card-title"><%= link_to gravatar_for(user, size: 150, style: "rounded-circle border mb-1"), user, class: 'text-decoration-none' %></h5>
+                  <div>
+                    <div class="d-flex justify-content-center align-items-center gap-1">
+                      <%= link_to user.username, user, class: "fs-5 fw-bold text-decoration-none", style:"color:#242424" %>
+                      <%# if user.admin? %>
+    <!--                    <span class="badge rounded-pill bg-primary ms-1">Admin</span>-->
+                      <%# end %>
+                      <% if user != current_user %>
+                        <% if current_user.following?(user) %>
+                            <%= link_to("unfollow/#{user.id}", method: :post, class: "text-decoration-none") do %>
+                              <span class="d-block badge bg-success ms-1">Following</span>
+                            <% end %>
+                        <% else %>
+                          <%= link_to("follow/#{user.id}", method: :post, class: "text-decoration-none") do %>
+                            <span class="d-block badge bg-primary ms-1">Follow</span>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <div class="text-muted mb-3">
+                      <small><i>Joined <%= time_ago_in_words(user.created_at) %> ago</i></small>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+                      <div class="card-text py-1 d-flex flex-column">
+                        <span class="text-muted fw-bolder fs-6"><%= user.followers.count %></span>
+                        <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Follower<%= "s" if user.articles.count != 1 %></span>
+                      </div>
+                      <div class="card-text py-1 d-flex flex-column">
+                        <span class="text-muted fw-bolder fs-6"><%= user.articles.count %></span>
+                        <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Article<%= "s" if user.articles.count != 1 %></span>
+                      </div>
+                      <div class="card-text py-1 d-flex flex-column">
+                        <span class="text-muted fw-bolder fs-6"><%= user.followings.count %></span>
+                        <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Following</span>
+                      </div>
+                    </div>
+
+                    <%= link_to 'View Profile', user, class: 'btn user-profile__btn--view my-2' %>
+                    <%# if logged_in? %>
+                      <%# if user == current_user %>
+                        <%#= link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-primary' %>
+                      <%# end %>
+                      <%# if current_user.admin? %>
+                        <%#= link_to 'Delete', user_path(user), method: :delete, data: {confirm: "Are you sure you want to delete the user account and all associated articles?"}, class: 'btn btn-outline-danger' %>
+                      <%# end %>
+                    <%# end %>
+                  </div>
                 </div>
-                <div class="card-text py-1">
-                  <span class="text-muted fw-bolder fs-6"><%= user.articles.count %></span>
-                  <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Article<%= "s" if user.articles.count != 1 %></span>
-                </div>
-                <div class="text-muted mb-3">
-                  <small><i>Joined <%= time_ago_in_words(user.created_at) %> ago</i></small>
-                </div>
-                <%= link_to 'View', user, class: 'btn btn-outline-success' %>
-                <% unless user == current_user %>
-                  <% if current_user.following?(user) %>
-                    <%= link_to 'Following', "unfollow/#{user.id}" , class: 'btn btn-outline-info', method: :post %>
-                  <% else %>
-                    <%= link_to 'Follow', "follow/#{user.id}" , class: 'btn btn-info', method: :post %>
-                  <% end %>
-                <% end %>
-                <% if logged_in? %>
-                  <% if user == current_user %>
-                    <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-primary' %>
-                  <% end %>
-                  <% if current_user.admin? %>
-                    <%= link_to 'Delete', user_path(user), method: :delete, data: {confirm: "Are you sure you want to delete the user account and all associated articles?"}, class: 'btn btn-outline-danger' %>
-                  <% end %>
-                <% end %>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
-    <% end %>
+    </div>
 
   </div>
 </div>

@@ -1,0 +1,19 @@
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__btn {
+    &--view {
+      background-color: #318CE7 !important;
+      color: white !important;
+      border-radius: 100px !important;
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+
+      &:hover {
+        background-color: #0066b2 !important;
+      }
+    }
+  }
+}
