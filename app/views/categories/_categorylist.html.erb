@@ -1,28 +1,16 @@
 <div class="container">
 
   <div id="categories">
-<!--    <div id="content-header text-center row justify-content-md-center mb-4">-->
-<!--      <div class="col-md-8" id="create-link">-->
-<!--        <i>Total Categories: <%#= @total_categories %></i>-->
-        <%# if logged_in? and (@user ? @user == current_user : true)%>
-          <%#= link_to 'Create Article', new_article_path, class: 'btn btn-primary' %>
-        <%# else %>
-<!--          <i>Per page: <%#= @articles.length %></i>-->
-        <%# end %>
-<!--      </div>-->
-<!--    </div>-->
-    <br>
-    <% colors = ["#ECF2FF", "#F7C8E0", "#EA8FEA", "#95BDFF", "#D9ACF5", "#B4E4FF", "#DFFFD8", "#E3DFFD", "#FFF4D2", "#DFFFD8", "#E5E0FF"] %>
+    <% colors = %w[#ECF2FF #F7C8E0 #EA8FEA #95BDFF #D9ACF5 #B4E4FF #DFFFD8 #E3DFFD #FFF4D2 #DFFFD8 #E5E0FF #FCF7E8 #CCF0C8 #E9FBED #E7F9FE #E6F3FE #E5E5FF #F5EAFA #FBE9EB] %>
     <% if @categories.length > 0 %>
+      <div class="row justify-content-md-center">
       <% @categories.each do |category| %>
-        <div class="row justify-content-md-center">
           <div class="col-md-5">
             <div class="card border-5 text-center mb-5 bg-white rounded" id='article-card'>
               <div class="card-body d-flex justify-content-evenly align-items-center">
                 <div class="fs-1" style="background-color:<%= colors.sample %>; height:100px; width:100px; border-radius: 50%; display:flex; justify-content: center; align-items: center"><%= category.name.chr.upcase %></div>
                 <div>
-                  <h5 class="card-title"><%= link_to category.name, category_path(category), class: 'text-decoration-none' %></h5>
-<!--                  <p class="card-text"><%#= pluralize(category.articles.count, 'article') %></p>-->
+                  <h5 class="card-title"><%= link_to category.name, category_path(category), class: 'text-decoration-none text-dark' %></h5>
                   <div class="card-text py-2">
                     <span class="text-muted fw-bolder fs-6"><%= category.articles.count %></span>
                     <span class="text-muted text-uppercase" style="font-size:13px;letter-spacing:1px">Article<%= "s" if category.articles.count != 1 %></span>
@@ -31,17 +19,12 @@
                     <small><i>Created <%= time_ago_in_words(category.created_at) %> ago</i></small>
                     <small><i>Edited <%= time_ago_in_words(category.updated_at) %> ago</i></small>
                   </div>
-<!--                  <div class="text-muted mb-3">-->
-<!--                  </div>-->
                 </div>
               </div>
-<!--              <div class="card-footer text-muted">-->
-<!--                <small><i>Created <%#= time_ago_in_words(category.created_at) %> ago, edited <%#= time_ago_in_words(category.updated_at) %> ago</i></small>-->
-<!--              </div>-->
             </div>
           </div>
-        </div>
       <% end %>
+        </div>
     <% else %>
       <p class="text-center">No Categories</p>
     <% end %>
