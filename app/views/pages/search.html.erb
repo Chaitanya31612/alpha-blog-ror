@@ -1,0 +1,104 @@
+<div class="search">
+  <div class="search-page">
+    <% if !params[:button].blank? %>
+      <%= link_to '', params[:button], class: "btn-close m-5 fs-3", id: "search-close" %>
+    <% else %>
+      <%= link_to '', :back, class: "btn-close m-5 fs-3", id: "search-close" %>
+    <% end %>
+    <div class="container">
+      <h1 class="text-center my-5 fw-bolder">Search Results</h1>
+
+      <div class="search-page__tabs">
+        <%= link_to(search_path({tab: "all", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if (params[:tab].blank? or params[:tab]=="all")}") do %>
+          All
+          <small class="text-muted fw-light rounded-circle">(<%= @users_results.count+@articles_results.count+@categories_results.count %>)</small>
+        <% end %>
+        <%= link_to(search_path({tab: "users", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="users"}") do %>
+          Users
+          <small class="text-muted fw-light rounded-circle">(<%= @users_results.count %>)</small>
+        <% end %>
+        <%= link_to(search_path({tab: "articles", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="articles"}") do %>
+          Articles
+          <small class="text-muted fw-light rounded-circle">(<%= @articles_results.count %>)</small>
+        <% end %>
+        <%= link_to(search_path({tab: "categories", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="categories"}") do %>
+          Categories
+          <small class="text-muted fw-light rounded-circle">(<%= @categories_results.count %>)</small>
+        <% end %>
+      </div>
+
+      <% if params[:tab].blank? or params[:tab].eql?("all") %>
+        <% @users_results.each do |user| %>
+          <%= link_to(user_path(user), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <%= gravatar_for(user, size: 40, style: "rounded-circle border") %>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= user.username %></span><br>
+              <small><%= user.email %></small>
+              <small>User</small>
+            </div>
+          <% end %>
+        <% end %>
+        <% @articles_results.each do |article| %>
+          <%= link_to(article_path(article), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+            </svg>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= article.title %></span><br>
+              <small>Article</small>
+            </div>
+          <% end %>
+        <% end %>
+        <% @categories_results.each do |category| %>
+          <%= link_to(category_path(category), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+              <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+              <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+            </svg>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= category.name %></span><br>
+              <small>Category</small>
+            </div>
+          <% end %>
+        <% end %>
+
+      <% elsif params[:tab].eql?("users") %>
+        <% @users_results.each do |user| %>
+          <%= link_to(user_path(user), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <%= gravatar_for(user, size: 40, style: "rounded-circle border") %>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= user.username %></span><br>
+              <small><%= user.email %></small>
+              <small>User</small>
+            </div>
+          <% end %>
+        <% end %>
+      <% elsif params[:tab].eql?("articles") %>
+        <% @articles_results.each do |article| %>
+          <%= link_to(article_path(article), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+            </svg>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= article.title %></span><br>
+              <small>Article</small>
+            </div>
+          <% end %>
+        <% end %>
+      <% elsif params[:tab].eql?("categories") %>
+        <% @categories_results.each do |category| %>
+          <%= link_to(category_path(category), class:"search-page__entry border-bottom text-decoration-none") do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+              <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+              <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+            </svg>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-bold"><%= category.name %></span><br>
+              <small>Category</small>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

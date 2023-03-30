@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   post 'follow/:user_id', to: 'users#follow'
   post 'unfollow/:user_id', to: 'users#unfollow'
+
+  get 'search', to: 'pages#search'
 end

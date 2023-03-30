@@ -6,3 +6,58 @@
     font-family: 'Poppins';
     // background-color: yellowgreen;
 }
+
+.search {
+    background-color: #eee;
+    height: 100%;
+    overflow: hidden !important;
+}
+
+#search-close {
+    position: absolute;
+    top: 10px;
+    right: 5rem;
+}
+
+.search-page {
+    position: relative;
+    backdrop-filter: blur(200rem);
+    border-radius: 10px;
+    width: 80vw;
+    height: 80vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: 3rem auto;
+    background-color: #fff;
+    box-shadow: 1px 2px 20px #ccc;
+
+    &__tabs {
+        border-bottom: 1px solid #ccc;
+        width: fit-content;
+        margin: auto auto 2rem;
+
+        & a {
+            text-decoration: none;
+            color: #242424;
+            font-size: 1.1rem;
+            margin-right: 10px;
+
+            &:hover {
+              color: #242424;
+                font-weight: 500;
+            }
+        }
+    }
+
+    &__entry {
+        width: 30rem;
+        margin: auto;
+        padding: 1rem 0;
+        color: #242424;
+        //border-bottom: 1px solid #ccc;
+
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
+}
