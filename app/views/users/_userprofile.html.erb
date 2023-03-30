@@ -1,3 +1,6 @@
+<% if @user.nil? and !user.nil? %>
+  <% @user = user %>
+<% end %>
 <div class="sticky-top">
   <div class="card border-0 text-center mb-5 bg-white rounded py-3 w-75 m-auto m-sm-0">
     <div class="card-body user-profile">

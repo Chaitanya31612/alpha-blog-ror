@@ -18,7 +18,8 @@
     </div>
 
     <% if params[:tab].blank? or params[:tab].eql?("articles") %>
-      <h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>
+<!--      <h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>-->
+      <br>
       <%= render 'articles/articlelist' %>
 
     <% elsif params[:tab].eql?("following") %>

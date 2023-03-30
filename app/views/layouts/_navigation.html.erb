@@ -59,7 +59,7 @@
           <% end %>
         <% end %>
         <% if logged_in? %>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" style="z-index: 9999;">
             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <%= gravatar_for current_user, size: 25, style: "rounded-circle me-1" %>
               <%= current_user.username %>
