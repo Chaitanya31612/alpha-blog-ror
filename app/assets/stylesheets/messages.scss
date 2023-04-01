@@ -1,0 +1,31 @@
+// Place all the styles related to the Messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.message-content {
+  color: blue;
+}
+
+.message-form {
+
+  &__input {
+    margin: auto;
+    display: block;
+    padding: 15px 20px;
+    width: 60%;
+    border-radius: 100px;
+    background: #f3f7fc;
+    box-shadow: 1px 1px 4px #eee;
+    outline: none !important;
+    border: 1px solid #eff2f6;
+    transition: box-shadow 300ms ease-in-out;
+
+    &:hover, &:focus {
+      box-shadow: 1px 1px 10px #ddd;
+    }
+  }
+}
+
+#active-users {
+
+}

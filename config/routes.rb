@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   post 'unfollow/:user_id', to: 'users#unfollow'
 
   get 'search', to: 'pages#search'
+
+  resources :messages, only: [:new, :create, :index]
+
+  get '/messages', to: redirect('/community')
+  resources :messages, path: 'community', only: [:new, :create, :index]
+
 end

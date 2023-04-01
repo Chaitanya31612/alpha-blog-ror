@@ -13,3 +13,6 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+document.addEventListener('turbolinks:load', function() {
+    console.log('turbolink has started')
+})

@@ -1,0 +1,69 @@
+<div class="section-profile">
+  <div class="" style="flex-grow: 3; order: -1">
+    <h1 class="text-center my-5 fw-bolder">Community Channel</h1>
+
+    <%= form_for @message, remote: true, class: "message-form" do |f| %>
+      <%= f.search_field :content, class: "message-form__input", placeholder: "What on your mind, #{current_user.username}?", required: true, autofocus: true %>
+      <%#= f.submit %>
+    <% end %>
+
+    <br>
+
+    <template id="msg-template">
+      <div class="m-auto my-4" style="width: 60%">
+        <div class="mb-2">
+          <a href="" class='msg-user-link text-decoration-none d-flex align-items-center justify-content-between gap-3 text-dark'>
+            <div class="d-flex flex-row align-items-center gap-2">
+              <img class="rounded-circle" src="https://gravatar.com/avatar/7e874d8d55dcbf20b3cb4cdfb0e?s=25">
+              <span class="fw-semibold fs-6 msg-sender"></span>
+            </div>
+            <small class="text-muted msg-time"></small>
+          </a>
+        </div>
+        <div id="message-container" class="card" style="background-color:#e5eefc;border:none;">
+          <div class="card-body">
+            <p class="msg-text"></p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div id="msg">
+    </div>
+
+    <% @prev_messages.reverse.each do |prev_msg| %>
+      <% user = User.find(prev_msg.user_id) %>
+      <div class="m-auto my-4" style="width: 60%">
+        <div class="mb-2">
+          <%= link_to user_path(user), class: 'text-decoration-none d-flex align-items-center justify-content-between gap-3 text-dark' do %>
+            <div class="d-flex flex-row align-items-center gap-2">
+              <%= gravatar_for(user, size: 25, style:"rounded-circle") %>
+              <span class="fw-semibold fs-6"><%= user.username %></span>
+            </div>
+            <small class="text-muted">sent <%= time_ago_in_words(prev_msg.created_at) %> ago</small>
+          <% end %>
+        </div>
+        <div id="message-container" class="card" style="background-color:#e5eefc;border:none;">
+          <div class="card-body">
+            <p><%= prev_msg.content %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div id="active-users" style="flex-grow: 1;">
+    <div class="sticky-top my-3">
+      <br>
+      <h3>All Users</h3>
+      <br>
+      <% users = User.all %>
+      <div class="">
+        <% users.each do |user| %>
+          <%= link_to user_path(user), class: "text-decoration-none" do %>
+            <p class="fw-normal fs-6"><%= user.username %></p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
