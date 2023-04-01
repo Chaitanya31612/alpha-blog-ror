@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post 'follow/:user_id', to: 'users#follow'
   post 'unfollow/:user_id', to: 'users#unfollow'
 
+  post 'article/:id/upvote', as: "upvote", to: 'articles#upvote'
+
   get 'search', to: 'pages#search'
 
   resources :messages, only: [:new, :create, :index]

@@ -2,9 +2,11 @@
   <div style="flex-grow: 3; order: -1">
     <div class="container py-5">
 <!--      <h1 class="text-center mb-5">Article Details</h1>-->
-      <div class="my-4 text-center d-block" id="tags">
-        <b>Tags: &nbsp;</b> <%= render @article.categories %>
-      </div>
+      <% if @article.categories.length > 0 %>
+        <div class="my-4 text-center d-block" id="tags">
+          <b>Tags: &nbsp;</b> <%= render @article.categories %>
+        </div>
+      <% end %>
       <div class="m-md-auto p-3 p-4 py-5 w-75" id="article_display">
         <small class="d-flex justify-content-between mb-lg-4">
           <% if @article.user %>
@@ -22,6 +24,14 @@
         <div class="mt-4">
           <h5 class="text-capitalize fw-bold fs-3 mb-4"><%= @article.title %></h5>
           <p class=""><%= @article.description %></p>
+          <br>
+          <div id="votes">
+            <% if current_user != @article.user %>
+              <%= link_to raw("&#128079; #{pluralize(@article.upvotes, 'Clap')}"), upvote_path, method: :post, class: "text-decoration-none text-warning" %>
+            <% else %>
+              <span class="text-warning user-select-none">&#128079; <%= pluralize(@article.upvotes, 'Clap') %></span>
+            <% end %>
+          </div>
           <% if logged_in? && (@article.user == current_user || current_user.admin?) %>
             <div class="mt-4">
               <%= link_to 'Edit', edit_article_path, class: "btn btn-outline-primary" %>
