@@ -57,10 +57,10 @@
               <%= link_to 'Categories', categories_path, class: "nav-link" %>
             </li>
           <% end %>
+          <li class="nav-item  <%= "fw-bold" if request.fullpath == "/community" or request.fullpath == "/messages" %>">
+            <%= link_to 'Community', '/community', class: "nav-link" %>
+          </li>
         <% end %>
-        <li class="nav-item  <%= "fw-bold" if request.fullpath == "/community" or request.fullpath == "/messages" %>">
-          <%= link_to 'Community', '/community', class: "nav-link" %>
-        </li>
         <% if logged_in? %>
           <li class="nav-item dropdown" style="z-index: 9999;">
             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

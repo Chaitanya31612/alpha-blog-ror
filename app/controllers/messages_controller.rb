@@ -1,7 +1,7 @@
 include ActionView::Helpers::DateHelper
 
 class MessagesController < ApplicationController
-
+  before_action :require_user
   def index
     @prev_messages = Message.all
     @message = Message.new
