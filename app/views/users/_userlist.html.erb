@@ -20,6 +20,10 @@
                             <%= link_to("/unfollow/#{user.id}", method: :post, class: "text-decoration-none") do %>
                               <span class="d-block badge bg-success ms-1">Following</span>
                             <% end %>
+                        <% elsif user.following?(current_user) %>
+                          <%= link_to("/follow/#{user.id}", method: :post, class: "text-decoration-none") do %>
+                            <span class="d-block badge bg-primary ms-1">Follow Back</span>
+                          <% end %>
                         <% else %>
                           <%= link_to("/follow/#{user.id}", method: :post, class: "text-decoration-none") do %>
                             <span class="d-block badge bg-primary ms-1">Follow</span>
