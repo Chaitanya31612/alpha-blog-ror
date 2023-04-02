@@ -1,55 +1,177 @@
-<div class="container">
+<% if params[:id].nil? %>
+  <div class="section-profile">
+    <div style="flex-grow: 3; order: -1">
+      <div class="container">
+        <div id="articles">
 
-  <div id="articles">
-    <div id="content-header text-center row justify-content-md-center mb-4">
-      <div class="col-md-8" id="create-link">
-        <i>Total Articles: <%= @total_articles %></i>
-        <% if logged_in? and (
-          if @user
-            @user == current_user
-          else
-            @category ? false : true
-          end)%>
-          <%= link_to 'Create Article', new_article_path, class: 'btn btn-primary' %>
-        <% else %>
-          <i>Per page: <%= @articles.length %></i>
-        <% end %>
+          <div class="search-page__tabs my-5 pb-2 border-bottom">
+            <%= link_to(articles_path({page: params[:page], tab: "feed"}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab].blank? or params[:tab]=="feed")}") do %>
+              Your Feed
+              <small class="text-muted fw-light rounded-circle"></small>
+            <% end %>
+            <%= link_to(articles_path({tab: "featured"}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab]=="featured")}") do %>
+              Featured
+              <small class="text-muted fw-light rounded-circle"></small>
+            <% end %>
+          </div>
+
+          <% if params[:tab] == "featured" %>
+            <% articles = Article.where(featured: true) %>
+          <% else %>
+            <% articles = @articles %>
+          <% end %>
+          <% if articles.length > 0 %>
+            <% articles.each do |article| %>
+              <div class="row justify-content-md-center py-3">
+                <div class="col-md-8">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <%= link_to(user_path(article.user), class:"user-entry gap-2 text-decoration-none") do %>
+                      <%= gravatar_for(article.user, size: 20, style: "rounded-circle border") %>
+                      <div class="flex-column flex-grow-1 justify-content-center gap-3">
+                        <span class="fw-semibold" style="font-size: 14px;">
+                          <%= article.user.username %>
+                        </span>
+                      </div>
+                    <% end %>
+                    <small class="text-muted d-flex gap-2">
+                      <% if article.featured? %>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFBF00" class="bi bi-stars" viewBox="0 0 16 16">
+                          <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                        </svg>
+                      <% end %>
+                      <%= article.created_at.strftime("%b %d, %Y") %>
+                    </small>
+                  </div>
+
+                  <div class="" style="border-bottom: 1px solid #aaa">
+                    <%= link_to(article_path(article), class:"text-decoration-none text-dark") do %>
+                      <h3 class="fw-bold fs-4"><%= article.title %></h3>
+                      <p class=""><%= truncate(article.description, length: 100) %></p>
+
+                      <% if article.categories.length > 0 %>
+                        <small class="mb-4 d-block" id="tags">
+                          <%= render article.categories %>
+                        </small>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-center">No Articles</p>
+          <% end %>
+        </div>
       </div>
     </div>
-    <br>
-    <% if @articles.length > 0 %>
-      <% @articles.each do |article| %>
-        <div class="row justify-content-md-center">
-          <div class="col-md-8">
-            <div class="card border-5 text-center mb-5 bg-white rounded" id='article-card'>
-              <% if !@user && article.user %>
-                <div class="card-header">
-                  <i class="text-muted">by <%= link_to article.user.username, user_path(article.user) %></i>
+
+    <div style="flex-grow: 1; justify-items: end" class="d-sm-none d-lg-block">
+      <div class="sticky-top" style="z-index: 100;">
+        <div class="py-5 pb-3 border-bottom">
+          <% featured_posts = Article.where(featured: true) %>
+          <p class="text-black fw-bold">
+            Featured Articles
+            <small><%= link_to "See all(#{featured_posts.count})", articles_path({tab: "featured"}), class: "text-success text-decoration-none badge" %></small>
+          </p>
+          <% featured_posts[0..2].each do |featured_post| %>
+            <div>
+              <% post_user = User.find(featured_post.user_id) %>
+              <%= link_to(user_path(post_user), class:"user-entry gap-1 text-decoration-none") do %>
+                <%= gravatar_for(post_user, size: 15, style: "rounded-circle border") %>
+                <div class="flex-column flex-grow-1 justify-content-center gap-1">
+                      <span class="fw-normal" style="font-size: 13px;">
+                        <%= post_user.username %>
+                      </span>
                 </div>
               <% end %>
-              <div class="card-body">
+              <%= link_to(article_path(featured_post), class: "text-decoration-none text-muted") do %>
+                <p class="fs-6 fw-semibold"><%= featured_post.title %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="py-3 border-bottom">
+          <p class="text-black fw-bold">
+            Top Categories
+            <small><%= link_to "See all(#{Category.all.count})", categories_path, class: "text-success text-decoration-none badge" %></small>
+          </p>
+          <% categories = Category.all.sort_by { |c| c.articles.count }.reverse %>
+          <% categories[0..4].each do |popular_category| %>
+            <%= link_to(category_path(popular_category), class:"text-decoration-none") do %>
+              <div class="d-flex align-items-center gap-2 p-2 text-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                  <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                  <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                </svg>
+                <span class="fw-normal" style="font-size: 14px;"><%= popular_category.name %></span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="pt-3">
+          <p class="text-black fw-bold">
+            Top Users
+            <small><%= link_to "See all(#{User.all.count})", users_path, class: "text-success text-decoration-none badge" %></small>
+          </p>
+          <% top_users = User.all.sort_by { |c| c.articles.count }.reverse %>
+          <% top_users[0..2].each do |top_user| %>
+            <%= link_to(user_path(top_user), class:"user-entry text-decoration-none") do %>
+              <%= gravatar_for(top_user, size: 20, style: "rounded-circle border") %>
+              <div class="flex-column flex-grow-1 justify-content-center gap-3">
+                    <span class="fw-normal" style="font-size: 14px;">
+                      <%= top_user.username %>
+                    </span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="container">
+  <div id="articles">
+    <% if @articles.length > 0 %>
+      <% @articles.each do |article| %>
+        <div class="row justify-content-md-center py-3">
+          <div class="col-md-8">
+            <div class="d-flex align-items-center justify-content-between">
+              <%= link_to(user_path(article.user), class:"user-entry gap-2 text-decoration-none") do %>
+                <%= gravatar_for(article.user, size: 20, style: "rounded-circle border") %>
+                <div class="flex-column flex-grow-1 justify-content-center gap-3">
+                        <span class="fw-semibold" style="font-size: 14px;">
+                          <%= article.user.username %>
+                        </span>
+                </div>
+              <% end %>
+              <small class="text-muted d-flex gap-2">
+                <% if article.featured? %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFBF00" class="bi bi-stars" viewBox="0 0 16 16">
+                    <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                  </svg>
+                <% end %>
+                <%= article.created_at.strftime("%b %d, %Y") %>
+              </small>
+            </div>
+
+            <div class="" style="border-bottom: 1px solid #aaa">
+              <%= link_to(article_path(article), class:"text-decoration-none text-dark") do %>
+                <h3 class="fw-bold fs-4"><%= article.title %></h3>
+                <p class="pb-2"><%= truncate(article.description, length: 100) %></p>
+
                 <% if article.categories.length > 0 %>
-                  <small class="mb-4 text-center d-block" id="tags">
-                    <b>Tags: &nbsp;</b> <%= render article.categories %>
+                  <small class="mb-4 d-block" id="tags">
+                    <%= render article.categories %>
                   </small>
                 <% end %>
-                <h5 class="card-title d-flex align-items-center justify-content-center">
-                  <%= link_to article.title, article_path(article), class: 'text-decoration-none me-2' %>
-                  <%# if article.featured? %>
-<!--                    <span class="fa fa-star" style="color: orange"></span>-->
-                  <%# end %>
-                </h5>
-                <p class="card-text"><%= truncate(article.description, length: 100) %></p>
-                <%= link_to 'View', article_path(article), class: 'btn btn-outline-success' %>
-                <% if logged_in? && (article.user == current_user) %>
-                  <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-outline-primary' %>
-                  <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure you want to delete this article?"}, class: 'btn btn-outline-danger' %>
-                <% end %>
-              </div>
-              <div class="card-footer text-muted">
-                <small><i>Created <%= time_ago_in_words(article.created_at) %> ago, edited <%= time_ago_in_words(article.updated_at) %> ago</i></small>
-              </div>
+              <% end %>
             </div>
+
+
           </div>
         </div>
       <% end %>
@@ -57,4 +179,5 @@
       <p class="text-center">No Articles</p>
     <% end %>
   </div>
-</div>
+  </div>
+<% end %>

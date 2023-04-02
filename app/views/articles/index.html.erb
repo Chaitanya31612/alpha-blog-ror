@@ -1,10 +1,12 @@
 <!--<div id="page-content">-->
-<h1 class="text-center my-5 fw-bolder">Articles Listing Page</h1>
+<!--<h1 class="text-center my-5 fw-bolder">Articles Listing Page</h1>-->
 <%#= render 'featured' %>
-<h3 class="text-center my-3 text-decoration-underline">All Articles</h3>
+<!--<h3 class="text-center my-3 text-decoration-underline">All Articles</h3>-->
 <%= render 'articlelist' %>
 
 <div class="flickr_pagination mb-5">
-  <%= will_paginate @articles, :container => false %>
+  <% unless params[:tab] == "featured" %>
+    <%= will_paginate @articles, :container => false %>
+  <% end %>
 </div>
 <!--</div>-->

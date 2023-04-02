@@ -3,7 +3,7 @@
     <h1 class="text-center my-5 fw-bolder">Community Channel</h1>
 
     <%= form_for @message, remote: true, class: "message-form" do |f| %>
-      <%= f.search_field :content, class: "message-form__input", placeholder: "What on your mind, #{current_user.username}?", required: true, autofocus: true %>
+      <%= f.search_field :content, class: "message-form__input", placeholder: "What on your mind, #{current_user.username}?", required: true, autofocus: true, autocomplete: "off" %>
       <%#= f.submit %>
     <% end %>
 
