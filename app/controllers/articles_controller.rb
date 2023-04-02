@@ -80,8 +80,7 @@ class ArticlesController < ApplicationController
   end
 
   def require_same_user
-    # if @article.user != current_user && !current_user.admin?
-    unless current_user.admin? || @article.user == current_user
+    unless @article.user == current_user
       flash[:alert_fail] = 'You are not allowed to perform this action!'
       redirect_to @article
     end

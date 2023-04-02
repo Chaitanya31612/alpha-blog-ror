@@ -1,6 +1,5 @@
 <div class="container">
 
-  <%#= @followingsArticles %>
   <div id="articles">
     <div id="content-header text-center row justify-content-md-center mb-4">
       <div class="col-md-8" id="create-link">
@@ -41,9 +40,8 @@
                   <%# end %>
                 </h5>
                 <p class="card-text"><%= truncate(article.description, length: 100) %></p>
-                <!--          <a href="#" class="btn btn-primary">Go somewhere</a>-->
                 <%= link_to 'View', article_path(article), class: 'btn btn-outline-success' %>
-                <% if logged_in? && (article.user == current_user || current_user.admin?) %>
+                <% if logged_in? && (article.user == current_user) %>
                   <%= link_to 'Edit', edit_article_path(article), class: 'btn btn-outline-primary' %>
                   <%= link_to 'Delete', article_path(article), method: :delete, data: {confirm: "Are you sure you want to delete this article?"}, class: 'btn btn-outline-danger' %>
                 <% end %>
