@@ -1,14 +1,86 @@
-<h1 class="text-center my-5 fw-bolder">Category: <%= @category.name %></h1>
+<!--<h1 class="text-center my-5 fw-bolder">Category: <%#= @category.name %></h1>-->
 
-<% if logged_in? && current_user.admin? %>
-  <div class="text-center mt-4">
-    <%= link_to 'Edit category', edit_category_path(@category), class: 'btn btn-outline-info' %>
+<div class="section-profile">
+  <div style="flex-grow: 3; order: -1">
+    <div class="d-flex gap-3 align-items-center justify-content-center mt-5 mb-4 border-bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-tags-fill mb-2" viewBox="0 0 16 16">
+        <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+        <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+      </svg>
+      <p class="text-black fs-1 fw-semibold"><%= @category.name %></p>
+    </div>
+    <h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>
+    <%= render 'articles/articlelist' %>
   </div>
-<% end %>
 
-<h3 class="mt-5 mb-4 text-center text-decoration-underline">Articles</h3>
+  <div style="flex-grow: 1; justify-items: end">
+    <div class="sticky-top py-5" style="z-index: 100;">
 
-<%= render 'articles/articlelist' %>
+
+      <div class="d-flex align-items-center gap-5">
+        <div class="d-flex flex-column align-items-baseline gap-2 py-3">
+          <span class="fw-bolder fs-4"><%= @category.articles.count %></span>
+          <span class="text-muted">Article<%= "s" if @category.articles.count != 1 %></span>
+        </div>
+        <div class="d-flex flex-column align-items-baseline gap-2 py-3">
+          <span class="fw-bolder fs-4"><%= @category.articles.select('distinct(user_id)').count %></span>
+          <span class="text-muted">User<%= "s" if @category.articles.select('distinct(user_id)').count != 1 %></span>
+        </div>
+      </div>
+
+      <% if logged_in? && current_user.admin? %>
+        <div class="mt-4">
+          <%= link_to 'Edit category', edit_category_path(@category), class: 'btn btn-outline-dark' %>
+        </div>
+      <% end %>
+
+      <div class="d-none d-md-block">
+        <div class="py-5">
+          <p class="text-black fw-bold">
+            Top Categories
+            <small><%= link_to "See all(#{Category.all.count})", categories_path, class: "text-success text-decoration-none badge" %></small>
+          </p>
+          <% categories = Category.all.sort_by { |c| c.articles.count }.reverse %>
+          <% categories[0..3].each do |popular_category| %>
+            <%= link_to(category_path(popular_category), class:"text-decoration-none") do %>
+              <div class="d-flex align-items-center gap-2 p-2 text-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                  <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                  <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                </svg>
+                <span class="fw-normal" style="font-size: 14px;"><%= popular_category.name %></span>
+              </div>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+
+      <div class="d-none d-lg-block">
+        <p class="text-black fw-bold">
+          Top Users
+          <small><%= link_to "See all(#{User.all.count})", users_path, class: "text-success text-decoration-none badge" %></small>
+        </p>
+        <% top_users = User.all.sort_by { |c| c.articles.count }.reverse %>
+        <% top_users[0..3].each do |top_user| %>
+          <%= link_to(user_path(top_user), class:"user-entry text-decoration-none") do %>
+            <%= gravatar_for(top_user, size: 20, style: "rounded-circle border") %>
+            <div class="flex-column flex-grow-1 justify-content-center gap-3">
+              <span class="fw-normal" style="font-size: 14px;">
+                <%= top_user.username %>
+<!--              <small>(<%#= top_user.articles.count %>)</small>-->
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <div class="flickr_pagination mb-5">
   <%= will_paginate @articles, :container => false %>

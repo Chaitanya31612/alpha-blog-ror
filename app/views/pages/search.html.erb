@@ -9,7 +9,7 @@
       <h1 class="text-center my-5 fw-bolder">Search Results</h1>
 
       <div class="search-page__tabs pb-2 border-bottom">
-        <%= link_to(search_path({tab: "all", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark pb-2 border-bottom border-dark" if (params[:tab].blank? or params[:tab]=="all")}") do %>
+        <%= link_to(search_path({tab: "all", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab].blank? or params[:tab]=="all")}") do %>
           All
           <small class="text-muted fw-light rounded-circle">(<%= @users_results.count+@articles_results.count+@categories_results.count %>)</small>
         <% end %>
@@ -34,7 +34,7 @@
             <div class="flex-column flex-grow-1 justify-content-center gap-3">
               <span class="fw-bold"><%= user.username %></span><br>
               <small><%= user.email %></small><br>
-              <small>User</small>
+              <small><%= user.admin? ? "Staff" : "User" %></small>
             </div>
           <% end %>
         <% end %>

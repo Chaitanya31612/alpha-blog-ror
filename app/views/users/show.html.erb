@@ -2,16 +2,16 @@
 
 <div class="section-profile">
   <div style="flex-grow: 3; order: -1">
-    <div class="search-page__tabs mt-3">
-      <%= link_to(user_path({tab: "articles"}), class: "#{"fw-bold" if (params[:tab].blank? or params[:tab]=="articles")}") do %>
+    <div class="search-page__tabs mt-3 pb-2 border-bottom">
+      <%= link_to(user_path({tab: "articles"}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab].blank? or params[:tab]=="articles")}") do %>
         Articles
         <small class="text-muted fw-light rounded-circle">(<%= @user.articles.count %>)</small>
       <% end %>
-      <%= link_to(user_path({tab: "following"}), class: "#{"fw-bold" if (params[:tab]=="following")}") do %>
+      <%= link_to(user_path({tab: "following"}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab]=="following")}") do %>
         Following
         <small class="text-muted fw-light rounded-circle">(<%= @user.followings.count %>)</small>
       <% end %>
-      <%= link_to(user_path({tab: "followers"}), class: "#{"fw-bold" if (params[:tab]=="followers")}") do %>
+      <%= link_to(user_path({tab: "followers"}), class: "#{"fw-bold pb-2 border-bottom border-dark" if (params[:tab]=="followers")}") do %>
         Followers
         <small class="text-muted fw-light rounded-circle">(<%= @user.followers.count %>)</small>
       <% end %>

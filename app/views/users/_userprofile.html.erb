@@ -8,9 +8,13 @@
       <div>
         <div class="d-flex justify-content-center align-items-center gap-1">
           <%= link_to @user.username, @user, class: "fs-5 fw-bold text-decoration-none", style:"color:#242424" %>
-          <%# if @user.admin? %>
-<!--              <span class="badge rounded-pill bg-primary ms-1">Admin</span>-->
-          <%# end %>
+          <% if @user.admin? %>
+            <span class="ms-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00a86b" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+              </svg>
+            </span>
+          <% end %>
           <% if @user != current_user %>
             <% if current_user.following?(@user) %>
               <%= link_to("/unfollow/#{@user.id}", method: :post, class: "text-decoration-none") do %>
@@ -60,7 +64,7 @@
           <small><%= link_to "See all(#{@user.followings.count})", user_path({tab: "following"}), class: "text-success text-decoration-none badge" %></small>
         </p>
         <% @user.followings[0..4].each do |followed_user| %>
-          <%= link_to(user_path(followed_user), class:"user-entry border-bottom text-decoration-none") do %>
+          <%= link_to(user_path(followed_user), class:"user-entry text-decoration-none") do %>
             <%= gravatar_for(followed_user, size: 20, style: "rounded-circle border") %>
             <div class="flex-column flex-grow-1 justify-content-center gap-3">
               <span class="fw-normal" style="font-size: 14px;"><%= followed_user.username %></span>
@@ -78,7 +82,7 @@
         <small><%= link_to "See all(#{@user.followers.count})", user_path({tab: "followers"}), class: "text-success text-decoration-none badge" %></small>
       </p>
       <% @user.followers[0..4].each do |followed_user| %>
-        <%= link_to(user_path(followed_user), class:"user-entry border-bottom text-decoration-none") do %>
+        <%= link_to(user_path(followed_user), class:"user-entry text-decoration-none") do %>
           <%= gravatar_for(followed_user, size: 20, style: "rounded-circle border") %>
           <div class="flex-column flex-grow-1 justify-content-center gap-3">
             <span class="fw-normal" style="font-size: 14px;"><%= followed_user.username %></span>
