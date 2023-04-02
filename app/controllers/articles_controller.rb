@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_action :require_user #, except: [:index, :show]
-  before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :require_same_user, only: [:destroy]
+  before_action :require_same_or_admin_user, only: [:edit, :update]
 
   def index
     @articles = Article.where(user_id: current_user.followings + [current_user]).paginate(page: params[:page], per_page: 5)
@@ -84,5 +85,14 @@ class ArticlesController < ApplicationController
       flash[:alert_fail] = 'You are not allowed to perform this action!'
       redirect_to @article
     end
+    end
+
+  def require_same_or_admin_user
+    unless @article.user == current_user || current_user.admin?
+      flash[:alert_fail] = 'You are not allowed to perform this action!'
+      redirect_to @article
+    end
   end
+
+
 end
