@@ -8,20 +8,20 @@
     <div class="container">
       <h1 class="text-center my-5 fw-bolder">Search Results</h1>
 
-      <div class="search-page__tabs">
-        <%= link_to(search_path({tab: "all", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if (params[:tab].blank? or params[:tab]=="all")}") do %>
+      <div class="search-page__tabs pb-2 border-bottom">
+        <%= link_to(search_path({tab: "all", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark pb-2 border-bottom border-dark" if (params[:tab].blank? or params[:tab]=="all")}") do %>
           All
           <small class="text-muted fw-light rounded-circle">(<%= @users_results.count+@articles_results.count+@categories_results.count %>)</small>
         <% end %>
-        <%= link_to(search_path({tab: "users", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="users"}") do %>
+        <%= link_to(search_path({tab: "users", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark" if params[:tab]=="users"}") do %>
           Users
           <small class="text-muted fw-light rounded-circle">(<%= @users_results.count %>)</small>
         <% end %>
-        <%= link_to(search_path({tab: "articles", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="articles"}") do %>
+        <%= link_to(search_path({tab: "articles", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark" if params[:tab]=="articles"}") do %>
           Articles
           <small class="text-muted fw-light rounded-circle">(<%= @articles_results.count %>)</small>
         <% end %>
-        <%= link_to(search_path({tab: "categories", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold" if params[:tab]=="categories"}") do %>
+        <%= link_to(search_path({tab: "categories", search_term: params[:search_term], button: params[:button]}), class: "#{"fw-bold pb-2 border-bottom border-dark" if params[:tab]=="categories"}") do %>
           Categories
           <small class="text-muted fw-light rounded-circle">(<%= @categories_results.count %>)</small>
         <% end %>
