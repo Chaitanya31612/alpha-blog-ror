@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_user, except: [:new, :create ] #, only: [:index, :show, :edit, :update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_user, only: [:index, :edit, :update, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
   before_action :set_follow_user, only: [:follow, :unfollow]
 
