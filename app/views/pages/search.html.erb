@@ -68,11 +68,12 @@
             <%= gravatar_for(user, size: 40, style: "rounded-circle border") %>
             <div class="flex-column flex-grow-1 justify-content-center gap-3">
               <span class="fw-bold"><%= user.username %></span><br>
-              <small><%= user.email %></small>
-              <small>User</small>
+              <small><%= user.email %></small><br>
+              <small><%= user.admin? ? "Staff" : "User" %></small>
             </div>
           <% end %>
         <% end %>
+
       <% elsif params[:tab].eql?("articles") %>
         <% @articles_results.each do |article| %>
           <%= link_to(article_path(article), class:"search-page__entry border-bottom text-decoration-none") do %>

@@ -29,10 +29,11 @@
           <div class="flex-column flex-grow-1 justify-content-center gap-3">
             <span class="fw-bold"><%= followed_user.username %></span><br>
             <small><%= followed_user.email %></small><br>
-            <small>User</small>
+            <small><%= followed_user.admin? ? "Staff" : "User" %></small>
           </div>
         <% end %>
       <% end %>
+
     <% elsif params[:tab].eql?("followers") %>
       <% @user.followers.each do |follower| %>
         <%= link_to(user_path(follower), class:"search-page__entry border-bottom text-decoration-none") do %>
@@ -40,7 +41,7 @@
           <div class="flex-column flex-grow-1 justify-content-center gap-3">
             <span class="fw-bold"><%= follower.username %></span><br>
             <small><%= follower.email %></small><br>
-            <small>User</small>
+            <small><%= follower.admin? ? "Staff" : "User" %></small>
           </div>
         <% end %>
       <% end %>
