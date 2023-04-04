@@ -3,6 +3,7 @@ include ActionView::Helpers::DateHelper
 class MessagesController < ApplicationController
   before_action :require_user
   def index
+    redirect_to "/community" if request.original_fullpath.include?("messages")
     @prev_messages = Message.all
     @message = Message.new
   end

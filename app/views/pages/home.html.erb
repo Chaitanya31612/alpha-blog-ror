@@ -1,18 +1,4 @@
-<!--<div class="container" id="home-container">-->
-<!--  <div class="p-5 mb-4 bg-light rounded-3" id="home-section">-->
-<!--    <div class="container-fluid py-5 text-center">-->
-<!--      <h1 class="display-5 fw-bold">Alpha Blog</h1>-->
-<!--      <p class="col-md-8 fs-4 w-100">Alpha Blog is a blogging application built using Ruby on Rails and is built for learning purposes.-->
-<!--        <br> All CRUD operations are performed using articles.</p>-->
-<!--      <br>-->
-<!--      <button class="btn btn-primary btn-lg" type="button">Sign Up</button>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 <main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="p-5 pb-4 mb-4 bg-light" id="home-section">
       <div class="container-fluid py-5 text-center">
         <h1 class="display-5 fw-bold">Alpha Blog</h1>
@@ -24,38 +10,24 @@
     </div>
   <br>
   <div class="container">
-    <!-- Example row of columns -->
     <div class="row pb-sm-5">
       <div class="col-md-4 px-md-5">
         <%= link_to "(/users)", users_path, class: "badge rounded-pill bg-success text-decoration-none text-white me-1" %>
         <h3>Users</h3>
         <p style="text-align: justify;">Users of Alpha Blog are provided with features to see the list of all articles, user profiles, categories and they can perform all CRUD actions on their articles and change their profile details.</p>
-<!--        <p>-->
-          <%#= link_to 'Users List', users_path, class: "btn btn-secondary" %>
-<!--        </p>-->
       </div>
       <div class="col-md-4 px-md-5">
         <%= link_to "(/articles)", articles_path, class: "badge rounded-pill bg-success text-decoration-none text-white me-1" %>
         <h3>Articles</h3>
         <p style="text-align: justify;">Authenticated users are provided access to create a new article, edit and delete it. They can perform CRUD operations on their articles and only read operation on other articles from the list.</p>
-<!--        <p>-->
-          <%#= link_to "Articles List", articles_path, class: "btn btn-secondary" %>
-<!--        </p>-->
       </div>
       <div class="col-md-4 px-md-5">
         <%= link_to "(/categories)", categories_path, class: "badge rounded-pill bg-success text-decoration-none text-white me-1" %>
         <h3>Categories</h3>
         <p style="text-align: justify;">Article Categories are listed in the categories page and can only be created, updated and deleted by admin user, however, they can be associated with articles for better categorization.</p>
-<!--        <p>-->
-          <%#= link_to 'Categories List', categories_path, class: "btn btn-secondary" %>
-<!--          </p>-->
       </div>
     </div>
-
-    <hr>
-
-  </div> <!-- /container -->
-
+  </div>
 </main>
 
 <%= render 'layouts/footer' %>
