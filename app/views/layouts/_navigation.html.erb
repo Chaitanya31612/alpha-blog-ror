@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-<!--    <a class="navbar-brand" id="logo" href="/">Alpha Blog</a>-->
     <%= link_to 'alphablog', root_path, class: 'navbar-brand', id: 'logo' %>
     <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,14 +7,10 @@
 
     <% if logged_in? %>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <%= form_tag(search_path, method: :get, class:"d-flex ms-md-1") do %>
+        <%= form_with(url: search_path, method: :get, class:"d-flex ms-md-1") do %>
           <%= search_field_tag :search_term, params[:search], placeholder: raw("&#128269; Search"), value: params[:search_term] ,class:"form-control me-2", required: true %>
           <%= button_tag "Search", value: request.fullpath, class: "btn btn-outline-light d-none" %>
         <% end %>
-<!--        <form class="d-flex ms-md-1" role="search">-->
-<!--          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--          <button class="btn btn-outline-light" type="submit">Search</button>-->
-<!--        </form>-->
       </div>
     <% end %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -88,12 +83,6 @@
               </li>
             </ul>
           </li>
-<!--          <li class="nav-item">-->
-            <%#= link_to current_user.username, user_path(current_user), class: 'nav-link' %>
-<!--          </li>-->
-<!--          <li class="nav-item">-->
-            <%#= link_to 'Logout', logout_path, class: 'nav-link', method: :delete %>
-<!--          </li>-->
         <% else %>
           <li class="nav-item">
             <%= link_to 'Login', login_path, class: 'nav-link' %>

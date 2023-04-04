@@ -7,14 +7,9 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.where(user_id: current_user.followings + [current_user]).paginate(page: params[:page], per_page: 5)
     @total_articles = Article.where(user_id: current_user.followings + [current_user]).count
-
-    # @articles = Article.paginate(page: params[:page], per_page: 5)
-    # @total_articles = Article.count
-    # @featured = Article.where(featured: true)
   end
 
   def show
-    # byebug
     @id_param = params[:id]
   end
 
@@ -26,9 +21,6 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    # puts 'create called'
-    # render html: params[:article]
-
     # this is strong param passing
     @article = Article.new(article_params)
     @article.user = current_user
@@ -40,9 +32,6 @@ class ArticlesController < ApplicationController
       # flash[:notice] = 'Error saving the article, Try again'
       render 'new'
     end
-    # way 1
-    # redirect_to article_path(@article) # this will take the id and redirect to corresponding article show page
-    # way 2
   end
 
   def update
