@@ -5,8 +5,8 @@ class ArticlesController < ApplicationController
   before_action :require_same_or_admin_user, only: [:edit, :update]
 
   def index
-    @articles = Article.where(user_id: current_user.followings + [current_user]).paginate(page: params[:page], per_page: 5)
-    @total_articles = Article.where(user_id: current_user.followings + [current_user]).count
+    @articles = Article.where(user_id: current_user.followings).paginate(page: params[:page], per_page: 5)
+    @total_articles = Article.where(user_id: current_user.followings).count
   end
 
   def show

@@ -13,7 +13,9 @@ ActiveAdmin.register Article do
     column :category_ids
     column :user
     column :user_id
-    column :created_at
+    column :created_at do |article|
+      article.created_at.strftime("%m/%d/%Y, %l:%M %p")
+    end
     column :updated_at
     actions
   end
