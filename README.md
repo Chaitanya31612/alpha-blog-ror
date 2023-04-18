@@ -1,4 +1,12 @@
-# Alpha Blog
+<p align="center">
+  <h2 align="center">Alpha Blog</h2>
+</p>
+
+<p align="center">
+<img src="https://img.shields.io/badge/language-Rails_6-blue?style=for-the-badge">
+</p>
+
+<br>
 
 ## About application
 
@@ -33,6 +41,42 @@ Overall, Alpha Blog is a comprehensive and user-friendly application that provid
 - bootstrap
 - rspec
 
+
+## Setup steps
+Follow the below guidelines: 
+
+**1.**  Fork [this](https://github.com/Chaitanya31612/alpha-blog-ror) repository.
+
+**2.**  Clone your forked copy of the project or directly.
+
+
+**3.** Navigate to the project directory :file_folder: .
+
+```
+cd alpha-blog-ror
+```
+
+**4.** Start postgresql server if it's not online.
+```
+sudo service postgresql start
+```
+
+**5.** Check postgresql status
+```
+sudo service postgresql status
+```
+
+**5.** Run db migrations and seed
+```
+rails db:setup
+```
+
+**6.** Start rails server
+```
+rails server or rails s
+```
+
+<br>
 
 ## Video Demo
 
