@@ -1,0 +1,49 @@
+# version: "3"
+# services:
+#   db:
+#     image: postgres
+#     volumes:
+#       - ./tmp/db:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     ports:
+#       - "5432:5432"
+#   web:
+#     build: .
+#     volumes:
+#       - .:/myapp
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - db
+
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - alpha-blog-postgres:/var/lib/postgresql/data
+  web:
+    build: .
+    volumes:
+      - ./alpha-blog:/opt/app
+    links:
+      - postgres
+    ports:
+      - "3000:3000"
+
+  # nginx:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.nginx
+  #   ports:
+  #     - "8020:8020"
+volumes:
+  alpha-blog-postgres:
