@@ -71,7 +71,19 @@ sudo service postgresql status
 rails db:setup
 ```
 
-**6.** Start rails server
+
+**6.** Run npm install
+```
+npm i
+```
+
+
+**7.** Run webpacker compile
+```
+rails webpacker:compile
+```
+
+**8.** Start rails server
 ```
 rails server or rails s
 ```
